@@ -1,14 +1,22 @@
 <template>
-  <div id="home">
+  <div id="home" class="wrapper">
     <nav-bar class="home-nav"><div slot="center">购物街</div></nav-bar>
-    <home-swiper :banners="banners"></home-swiper>
-    <recommend-view :recommends="recommends"></recommend-view>
-    <feature-view/>
-    <tab-control class="tab-control" 
-                 :titles="['流行','新款','精选']"
-                 @tabClick="tabClick"></tab-control>
-    <!-- <goods-list :goods="goods[currentType].list"></goods-list> -->
-    <goods-list :goods="showGoods"></goods-list>
+
+    <scroll class="content" ref="scroll" 
+            :probe-type="3"
+            @scroll="contentScroll" 
+            :pull-up-load="true" 
+            @pullingUp="loadMore">
+      <home-swiper :banners="banners"/>
+      <recommend-view :recommends="recommends"/>
+      <feature-view/>
+      <tab-control class="tab-control"
+                   :titles="['流行','新款','精选']"
+                   @tabClick="tabClick"/>
+      <goods-list :goods="showGoods"/>
+    </scroll>
+
+    <back-top @click.native="backClick" v-show="isShowBackTop"/>
   </div>
 </template>
 
@@ -20,6 +28,8 @@
   import NavBar from "components/common/navbar/NavBar";
   import TabControl from "components/content/tabControl/TabControl";
   import GoodsList from "components/content/goods/GoodsList";
+  import Scroll from 'components/common/scroll/Scroll';
+  import BackTop from "components/content/backTop/BackTop";
 
   import {getHomeMultidata,getHomeGoods} from "network/home";
 
@@ -31,7 +41,9 @@
       FeatureView,
       NavBar,
       TabControl,
-      GoodsList
+      GoodsList,
+      Scroll,
+      BackTop
     },
     data(){
       return{
@@ -42,7 +54,8 @@
           'new':{page:0,list:[]},
           'sell':{page:0,list:[]},
         },
-        currentType:"pop"
+        currentType:"pop",
+        isShowBackTop:false
       }
     },
     computed:{
@@ -73,6 +86,16 @@
             break
         }
       },
+      backClick(){
+        this.$refs.scroll.scrollTo(0,0)
+      },
+      contentScroll(position){
+        this.isShowBackTop=(-position.y)>1000
+      },
+      loadMore(){
+        this.getHomeGoods(this.currentType)
+        this.$refs.scroll.refresh()
+      },
       // 网络请求相关方法
       getHomeMultidata(){
         getHomeMultidata().then(res=>{
@@ -85,6 +108,8 @@
         getHomeGoods(type,page).then(res=>{
           this.goods[type].list.push(...res.data.list)
           this.goods[type].page+=1
+
+          this.$refs.scroll.finishPullUp()
         })
       }
     }
@@ -94,6 +119,9 @@
 <style scoped>
   #home{
     padding-top:44px;
+    /*100vh:100视口*/
+    height: 100vh;
+    position: relative;
   }
   .home-nav{
     background-color: var(--color-tint);
@@ -105,8 +133,22 @@
     z-index: 9;
   }
   .tab-control{
-    position: sticky;
+    /* 用了better-scroll这个属性就失效了 */
+    /* position: sticky; */
     top:44px;
     z-index: 9;
   }
+  .content{
+    overflow: hidden;
+    position: absolute;
+    top:44px;
+    bottom: 49px;
+    left: 0;
+    right: 0;
+  }
+  /*.content{*/
+  /*  height: calc(100% - 93px);*/
+  /*  overflow: hidden;*/
+  /*  margin-top: 44px;*/
+  /*}*/
 </style>
