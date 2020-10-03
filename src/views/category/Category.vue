@@ -123,7 +123,7 @@
       // this.scroll=new BScroll(document.querySelector(".wrapper"),{
 
       // })
-      this.scroll=new BScroll(document.querySelector(".wrapper"),{
+      this.scroll=new BScroll(this.$refs.aaa,{
         probeType:3, //设置为3才可以监听所有
         click:true,
         pullUpLoad:true
