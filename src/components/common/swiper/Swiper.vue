@@ -9,7 +9,8 @@
         <div v-for="(item,index) in slideCount"
              class="indi-item"
              :class="{active:index===currentIndex-1}"
-             :key="index"></div>
+             :key="index">
+        </div>
       </slot>
     </div>
   </div>
@@ -104,12 +105,12 @@
         let slidesEls=swiperEl.getElementsByClassName('slide');
 
         // 2.保存个数
-        this.sliderCount=slidesEls.length;
+        this.slideCount=slidesEls.length;
 
         // 3.如果大于1个,那么在前后分别添加一个slide
-        if(this.sliderCount>1){
+        if(this.slideCount>1){
           let cloneFirst=slidesEls[0].cloneNode(true);
-          let cloneLast=slidesEls[this.sliderCount-1].cloneNode(true);
+          let cloneLast=slidesEls[this.slideCount-1].cloneNode(true);
           swiperEl.insertBefore(cloneLast,slidesEls[0]);
           swiperEl.appendChild(cloneFirst);
           this.totalWidth=swiperEl.offsetWidth;

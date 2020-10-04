@@ -27,18 +27,20 @@
       }
     },
     methods:{
+      imageLoad(){
+        this.$bus.$emit('itemImageLoad')
+      },
       itemClick(){
         // 1.获取id
-        const iid=this.goodsItem.iid;
+        // const iid=this.goodsItem.iid;
         // 2.跳转到详情页面
-        this.$router.push({path:'/detail',query:{iid}})
+        // this.$router.push({path:'/detail',query:{iid}})
+        this.$router.push('/detail/'+ this.goodsItem.iid)
+        // console.log(this.goodsItem.iid)
       },
       // imgLoad(){
       //   this.$bus.$emit('imgLoad')
       // },
-      imageLoad(){
-        this.$bus.$emit('itemImageLoad')
-      }
     }
   }
 </script>
@@ -91,4 +93,4 @@
     background: url("~assets/img/common/collect.svg") 0 0/14px 14px;
   }
 </style>
- 
+
