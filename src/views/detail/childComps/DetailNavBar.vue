@@ -41,6 +41,14 @@
 </script>
 
 <style scoped>
+  .nav-bar{
+    position: relative;
+    z-index: 9;
+    background-color: #fff;
+  }
+  .nav-bar img{
+    margin-top:10px;
+  }
   .titles{
     display: flex;
     font-size: 13px;
