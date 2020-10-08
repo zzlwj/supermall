@@ -63,7 +63,7 @@
     font-size: 12px;
     padding: 2px 8px 2px 3px;
     color:#fff;
-    background-color: var(--color-high-text);
+    /* background-color: var(--color-high-text); */
     border-radius: 8px;
     margin-left:5px;
     text-align: center;

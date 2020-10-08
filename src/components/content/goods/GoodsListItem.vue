@@ -1,7 +1,6 @@
 <template>
   <div class="goods-item" @click="itemClick">
-    <!-- <img @load="imgLoad" v-lazy="showImage" :key="showImage" alt=""> -->
-    <img :src="goodsItem.show.img" alt="" @load="imageLoad">
+    <img :src="showImage" @load="imgLoad">
     <div class="goods-info">
       <p>{{goodsItem.title}}</p>
       <span class="price">{{goodsItem.price}}</span>
@@ -27,20 +26,28 @@
       }
     },
     methods:{
-      imageLoad(){
-        this.$bus.$emit('itemImageLoad')
+      imgLoad(){
+        this.$bus.$emit('itemImgLoad')
+        // if(this.$route.path.indexOf('/home')){
+        //   this.$bus.$emit('homeItemImgLoad')
+        // }else if(this.$route.path.indexOf('/detail')){
+        //   this.$bus.$emit('detailImgLoad')
+        // }
       },
       itemClick(){
+        //若用jQuery用以下写法:(亲测失败)
         // 1.获取id
         // const iid=this.goodsItem.iid;
         // 2.跳转到详情页面
-        // this.$router.push({path:'/detail',query:{iid}})
+        // this.$router.push({path:'/detail/',query:{iid}})
         this.$router.push('/detail/'+ this.goodsItem.iid)
-        // console.log(this.goodsItem.iid)
-      },
-      // imgLoad(){
-      //   this.$bus.$emit('imgLoad')
-      // },
+        // this.$router.push({
+        //   path:'/detail',
+        //   query:{
+        //     iid:this.goodsItem.iid
+        //   }
+        // })
+      }
     }
   }
 </script>

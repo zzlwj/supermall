@@ -2,7 +2,7 @@
   <!-- ul>li{分类列表$}*100 -->
   <div class="wrapper" ref="aaa">
     <!--无论是否设置click:true,button都可以点击-->    
-    <ul class="content">
+    <ul class="content" @scroll="contentScroll">
       <button @click="btnClick">按钮</button>
       <li>分类列表1</li>
       <li>分类列表2</li>
@@ -105,11 +105,14 @@
       <li>分类列表99</li>
       <li>分类列表100</li>
     </ul>
+    <back-top @click.native="backTop" v-show="isShowBackTop"/>
   </div>
 </template>
 
 <script>
   import BScroll from 'better-scroll'
+  import {bacTopMixin} from "common/mixin"
+
   export default {
     name: "Category",
     data(){
@@ -117,6 +120,7 @@
         scroll:null
       }
     },
+    mixins:[bacTopMixin],
     mounted(){
       // console.log(this.$refs.aaa)
       // console.log(document.querySelector(".wrapper"))
@@ -138,7 +142,10 @@
     methods:{
       btnClick(){
         console.log('btnClick')
-      }
+      },
+      contentScroll(position){
+        this.listenShowBackTop(position)
+      },
     }
   }
 </script>
