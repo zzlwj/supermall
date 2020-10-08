@@ -18,7 +18,7 @@
         <div class="cart" @click="addToCart">加入购物车</div>
         <div class="buy">购买</div>
     </div>
-    <sport-ball ref="ball" class="sport-ball"></sport-ball>
+<!--<sport-ball ref="ball" class="sport-ball"></sport-ball>-->
   </div>
 </template>
 
@@ -27,7 +27,7 @@ export default{
   name:"DetailBottomBar",
   methods:{
     addToCart(){
-      this.$emit("addToCart")
+      this.$emit("addCart")
     }
   }
 }
@@ -84,9 +84,9 @@ export default{
 .bar-right .buy{
   background-color: #f69;
 }
-.sport-ball{
-  position:absolute;
-  left:225px;
-  bottom:20px;
-}
-</style> 
+/*.sport-ball{*/
+/*  position:absolute;*/
+/*  left:225px;*/
+/*  bottom:20px;*/
+/*}*/
+</style>

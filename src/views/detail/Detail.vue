@@ -1,8 +1,15 @@
 <template>
   <div class="detail">
     <detail-nav-bar class="detail-nav" @titleClick="titleClick" ref="nav"/>
-    <scroll class="content" ref="scroll" @scroll="contentScroll" :probe-type="3">
-      <!-- <scroll class="content" ref="contentscroll" > -->
+    <scroll class="content" ref="scroll" :probe-type="3" @scroll="contentScroll">
+
+      <!--<div>{{$store.state.cartList.length}}</div>-->
+      <ul>
+        <li v-for="(item,index) in $store.state.cartList" :key="index">
+          {{item}}
+        </li>
+      </ul>
+
       <detail-swiper :top-images="topImages"/>
       <detail-base-info :goods="goods"/>
       <detail-shop-info :shop="shop"/>
@@ -11,8 +18,9 @@
       <detail-param-info :param-info="paramInfo" ref="parmas"/>
       <detail-comment-info :comment-info="commentInfo" ref="comment"/>
       <goods-list :goods="recommends" ref="recommend"/>
+
     </scroll>
-    <detail-bottom-bar @addToCart="addToCart"/>
+    <detail-bottom-bar @addCart="addToCart"/>
     <back-top @click.native="backTop" v-show="isShowBackTop"/>
 
 
@@ -182,6 +190,9 @@
         product.iid=this.iid
 
         // 2.将商品添加到购物车里
+        // this.$store.cartList.push(product)
+        // this.$store.commit('addCart',product)
+        this.$store.dispatch('addCart',product)
       }
     }
   }

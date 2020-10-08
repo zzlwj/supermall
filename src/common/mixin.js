@@ -27,7 +27,7 @@ export const bacTopMixin={
   },
   data(){
     return {
-      isShowBackTop:true
+      isShowBackTop:false
     }
   },
   methods:{
