@@ -4,11 +4,11 @@
     <scroll class="content" ref="scroll" :probe-type="3" @scroll="contentScroll">
 
       <!--<div>{{$store.state.cartList.length}}</div>-->
-      <ul>
-        <li v-for="(item,index) in $store.state.cartList" :key="index">
-          {{item}}
-        </li>
-      </ul>
+<!--      <ul>-->
+<!--        <li v-for="(item,index) in $store.state.cartList" :key="index">-->
+<!--          {{item}}-->
+<!--        </li>-->
+<!--      </ul>-->
 
       <detail-swiper :top-images="topImages"/>
       <detail-base-info :goods="goods"/>
@@ -22,7 +22,7 @@
     </scroll>
     <detail-bottom-bar @addCart="addToCart"/>
     <back-top @click.native="backTop" v-show="isShowBackTop"/>
-
+<!--    <toast :message="message" :show="show"></toast>-->
 
   </div>
 </template>
@@ -39,10 +39,13 @@
 
   import Scroll from "components/common/scroll/Scroll";
   import GoodsList from "components/content/goods/GoodsList";
+  // import Toast from "components/common/toast/Toast"
 
   import {getDetail,Goods,Shop,GoodsParam,getRecommend} from "network/detail";
-  import {itemListenerMixin,bacTopMixin} from "common/mixin"
   import {debounce} from "common/utils"
+  import {itemListenerMixin,bacTopMixin} from "common/mixin"
+
+  import {mapActions} from "vuex"
 
   export default {
     name: "Detail",
@@ -56,7 +59,8 @@
       DetailCommentInfo,
       DetailBottomBar,
       Scroll,
-      GoodsList
+      GoodsList,
+      // Toast
     },
     mixins:[itemListenerMixin,bacTopMixin],
     data(){
@@ -72,6 +76,8 @@
         themeTopYs:[],
         getThemeTopY:null,
         currentIndex:0,
+        // message:'',
+        // show:false,
       }
     },
     created(){
@@ -138,6 +144,7 @@
       this.$bus.$off('itemImgLoad',this.itemImgListener)
     },
     methods:{
+      ...mapActions(['addCart']),
       detailImageLoad(){
         this.newRefresh()
         this.getThemeTopY()
@@ -192,7 +199,30 @@
         // 2.将商品添加到购物车里
         // this.$store.cartList.push(product)
         // this.$store.commit('addCart',product)
-        this.$store.dispatch('addCart',product)
+
+        // this.$store.dispatch('addCart',product)
+
+        //actions.js用了new Promise后,此处修改为:
+        // this.$store.dispatch('addCart',product).then(res=>{
+        //   console.log(res);
+        // })
+        //                 ^
+        //                /|\
+        //3.添加到购物车成功|
+
+        //若import {mapActions}可用以下写法
+        this.addCart(product).then(res=>{
+          // this.show=true;
+          // this.message=res;
+          //
+          // setTimeout(()=>{
+          //   this.show=false;
+          //   this.message='';
+          // },1500)
+
+          this.$toast.show(res)
+        })
+
       }
     }
   }
