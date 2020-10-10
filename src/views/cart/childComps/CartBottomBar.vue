@@ -43,22 +43,22 @@
         //写法一:filter,建议不使用(因为有遍历,所以性能不高)
         // return !(this.cartList.filter(item=>!item.checked).length)
         //写法二:find(相对性能高)
-        return !this.cartList.find(item=>!item.checked)
+        // return !this.cartList.find(item=>!item.checked)
         //写法三:普通遍历
-        // for(let item of this.cartList){
-        //   if (!item.checked){
-        //     return false
-        //   }
-        // }
-        // return true
+        for(let item of this.cartList){
+          if (!item.checked){
+            return false
+          }
+        }
+        return true
       }
     },
     methods:{
       checkClick(){
         if (this.isSelectAll){ //全部选中
-          this.cartList.forEach(item=>item.isChecked=false)
+          this.cartList.forEach(item=>item.checked=false)
         }else{ //部分或全部不选中
-          this.cartList.forEach(item=>item.isChecked=true)
+          this.cartList.forEach(item=>item.checked=true)
         }
       },
       calcClick(){
@@ -91,6 +91,7 @@
     height: 20px;
     line-height: 20px;
     margin-right:5px;
+    touch-action: none
    }
   .price{
     margin-left: 20px;
@@ -101,5 +102,6 @@
     background: red;
     color: #fff;
     text-align: center;
+    touch-action: none
   }
 </style>

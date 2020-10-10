@@ -1,3 +1,4 @@
+<script src="common/mixin.js"></script>
 <template>
   <div id="app">
     <keep-alive exclude="Detail">

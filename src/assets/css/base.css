@@ -51,3 +51,7 @@ a{
 .right{
   float: right;
 }
+
+button,div{
+  touch-action: none
+}

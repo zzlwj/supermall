@@ -20,6 +20,7 @@
   .check-button{
     border-radius: 50%;
     border:2px solid #aaa;
+    touch-action: none;
   }
   .check{
     border-color:red;

@@ -56,7 +56,7 @@
     vertical-align: middle;
     margin-bottom: 2px;
   }
-  .active{
-    color:red
-  }
+  /*.active{*/
+  /*  color:red*/
+  /*}*/
 </style>
